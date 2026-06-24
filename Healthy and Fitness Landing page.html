@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Health & Fitness Insights</title>
+  <style>
+    /* =============================================
+       GLOBAL STYLES
+    ============================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* ✏️ EDITABLE: Change brand colors here */
+      --primary-color: #2ecc71;
+      --secondary-color: #27ae60;
+      --accent-color: #f39c12;
+      --dark-color: #2c3e50;
+      --light-bg: #f4f9f4;
+      --text-color: #333;
+      --white: #ffffff;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-main);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--dark-color);
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 50px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--white);
+      color: var(--primary-color);
+    }
+
+    /* =============================================
+       NAVIGATION BAR
+    ============================================= */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    /* ✏️ EDITABLE: Update nav logo icon or text */
+    .nav-logo span {
+      color: var(--dark-color);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      color: var(--dark-color);
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .nav-cta {
+      background-color: var(--primary-color);
+      color: white !important;
+      padding: 8px 22px;
+      border-radius: 50px;
+    }
+
+    .nav-cta:hover {
+      background-color: var(--secondary-color) !important;
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* ✏️ EDITABLE: Change hero background image URL below */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.45);
+      transition: opacity 0.5s ease;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+      padding: 0 20px;
+      color: var(--white);
+    }
+
+    /* ✏️ EDITABLE: Change hero badge text */
+    .hero-badge {
+      display: inline-block;
+      background-color: rgba(46, 204, 113, 0.85);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* ✏️ EDITABLE: Change hero headline */
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-content h1 span {
+      color: var(--primary-color);
+    }
+
+    /* ✏️ EDITABLE: Change hero subtext */
+    .hero-content p {
+      font-size: 1.15rem;
+      margin-bottom: 35px;
+      opacity: 0.9;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    /* ✏️ EDITABLE: Change stat numbers and labels */
+    .stat-item h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .stat-item p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 0;
+    }
+
+    /* =============================================
+       FEATURES / INSIGHTS SECTION
+    ============================================= */
+    #insights {
+      padding: 100px 40px;
+      background-color: var(--light-bg);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 35px 30px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    }
+
+    /* ✏️ EDITABLE: Change card icon (emoji or replace with <img>) */
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* ✏️ EDITABLE: Change each card title */
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--dark-color);
+    }
+
+    /* ✏️ EDITABLE: Change each card description */
+    .feature-card p {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .feature-tag {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 4px 14px;
+      background-color: rgba(46, 204, 113, 0.1);
+      color: var(--primary-color);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 50px;
+    }
+
+    /* =============================================
+       TIPS / ARTICLES SECTION
+    ============================================= */
+    #tips {
+      padding: 100px 40px;
+      background-color: var(--white);
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tip-card {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* ✏️ EDITABLE: Change tip card image height */
+    .tip-card-img {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tip-card-img img {
+      height: 100%;
+      transition: transform 0.4s ease;
+    }
+
+    .tip-card:hover .tip-card-img img {
+      transform: scale(1.07);
+    }
+
+    /* ✏️ EDITABLE: Change tip category badge */
+    .tip-category {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+
+    .tip-card-body {
+      padding: 25px;
+      background: var(--white);
+    }
+
+    /* ✏️ EDITABLE: Change tip card title */
+    .tip-card-body h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark-color);
+    }
+
+    /* ✏️ EDITABLE: Change tip card description */
+    .tip-card-body p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .tip-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    .tip-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* =============================================
+       WORKOUT PLAN BANNER
+    ============================================= */
+    #cta-banner {
+      padding: 100px 40px;
+      /* ✏️ EDITABLE: Change banner background image URL */
+      background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      text-align: center;
+      color: white;
+    }
+
+    #cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* ✏️ EDITABLE: Change CTA banner headline */
+    .cta-content h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    /* ✏️ EDITABLE: Change CTA banner description */
+    .cta-content p {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 35px;
+      line-height: 1.8;
+    }
+
+    /* =============================================
+       TESTIMONIALS SECTION
+    ============================================= */
+    #testimonials {
+      padding: 100px 40px;
+      background-color: var(--light-bg);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      font-size: 5rem;
+      color: var(--primary-color);
+      opacity: 0.15;
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    /* ✏️ EDITABLE: Change testimonial text */
+    .testimonial-card p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* ✏️ EDITABLE: Change testimonial avatar image */
+    .testimonial-author img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ✏️ EDITABLE: Change testimonial author name and role */
+    .author-info h4 {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--dark-color);
+    }
+
+    .author-info span {
+      font-size: 0.8rem;
+      color: var(--primary-color);
+    }
+
+    .stars {
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    /* =============================================
+       NEWSLETTER SECTION
+    ============================================= */
+    #newsletter {
+      padding: 80px 40px;
+      background-color: var(--dark-color);
+      text-align: center;
+    }
+
+    /* ✏️ EDITABLE: Change newsletter headline */
+    #newsletter h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    /* ✏️ EDITABLE: Change newsletter description */
+    #newsletter p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 30px;
+      font-size: 1rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 50px;
+      border: none;
+      font-size: 0.95rem;
+      outline: none;
+      min-width: 220px;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background-color: #1a252f;
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.88rem;
+    }
+
+    /* ✏️ EDITABLE: Change footer text */
+    footer span {
+      color: var(--primary-color);
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+
+      nav {
+        padding: 15px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      #insights,
+      #tips,
+      #cta-banner,
+      #testimonials,
+      #newsletter {
+        padding: 70px 20px;
+      }
+
+      .hero-stats {
+        gap: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVIGATION BAR
+       ✏️ Edit: Logo text, nav links, CTA button
+  ============================================= -->
+  <nav>
+    <div class="nav-logo">
+      💪 Fit<span>Insight</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#insights">Insights</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="#testimonials">Success Stories</a></li>
+      <li><a href="#newsletter" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       HERO SECTION
+       ✏️ Edit: Background image in CSS (#hero .hero-bg)
+       ✏️ Edit: Badge text, headline, subtext, buttons, stats
+  ============================================= -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+
+      <!-- ✏️ EDITABLE: Hero badge -->
+      <div class="hero-badge">🌿 Your Wellness Journey Starts Here</div>
+
+      <!-- ✏️ EDITABLE: Main headline -->
+      <h1>Transform Your Health with <span>Smart Fitness</span> Insights</h1>
+
+      <!-- ✏️ EDITABLE: Hero description paragraph -->
+      <p>
+        Discover science-backed tips, personalized workout plans, and
+        nutrition guidance designed to help you live a stronger, healthier life — every single day.
+      </p>
+
+      <div class="hero-buttons">
+        <!-- ✏️ EDITABLE: Hero CTA buttons and links -->
+        <a href="#insights" class="btn btn-primary">Explore Insights</a>
+        <a href="#tips" class="btn btn-outline">Browse Tips</a>
+      </div>
+
+      <!-- ✏️ EDITABLE: Stats numbers and labels -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>10K+</h3>
+          <p>Active Members</p>
+        </div>
+        <div class="stat-item">
+          <h3>200+</h3>
+          <p>Workout Plans</p>
+        </div>
+        <div class="stat-item">
+          <h3>95%</h3>
+          <p>Success Rate</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       INSIGHTS / FEATURES SECTION
+       ✏️ Edit: Section title, subtitle
+       ✏️ Edit: Each card — icon, title, description, tag
+  ============================================= -->
+  <section id="insights">
+    <!-- ✏️ EDITABLE: Section heading -->
+    <h2 class="section-title">Health & Fitness Insights</h2>
+    <p class="section-subtitle">Everything you need to know to level up your health game</p>
+
+    <div class="features-grid">
+
+      <!-- ✏️ EDITABLE: Card 1 — Icon, Title, Description, Tag -->
+      <div class="feature-card">
+        <span class="feature-icon">🏃</span>
+        <h3>Cardio Training</h3>
+        <p>
+          Boost your endurance and heart health with targeted cardio routines
+          designed for all fitness levels — from beginners to athletes.
+        </p>
+        <span class="feature-tag">Endurance</span>
+      </div>
+
+      <!-- ✏️ EDITABLE: Card 2 — Icon, Title, Description, Tag -->
+      <div class="feature-card">
+        <span class="feature-icon">🥗</span>
+        <h3>Nutrition Planning</h3>
+        <p>
+          Fuel your body right with personalized meal plans and expert nutrition
+          tips that complement your fitness goals.
+        </p>
+        <span class="feature-tag">Nutrition</span>
+      </div>
+
+      <!-- ✏️ EDITABLE: Card 3 — Icon, Title, Description, Tag -->
+      <div class="feature-card">
+        <span class="feature-icon">🏋️</span>
+        <h3>Strength Building</h3>
+        <p>
+          Build lean muscle and increase functional strength with progressive
+          resistance training plans backed by science.
+        </p>
+        <span class="feature-tag">Strength</span>
+      </div>
+
+      <!-- ✏️ EDITABLE: Card 4 — Icon, Title, Description, Tag -->
+      <div class="feature-card">
+        <span class="feature-icon">🧘</span>
+        <h3>Mind & Recovery</h3>
+        <p>
+          Optimize recovery with mindfulness, stretching routines, and sleep
+          strategies to reduce injury and improve performance.
+        </p>
+        <span class="feature-tag">Wellness</span>
+      </div>
+
+      <!-- ✏️ EDITABLE: Card 5 — Icon, Title, Description, Tag -->
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h3>Progress Tracking</h3>
+        <p>
+          Monitor your fitness journey with smart metrics, habit logs, and
+          milestone celebrations to keep you motivated.
+        </p>
+        <span class="feature-tag">Analytics</span>
+      </div>
+
+      <!-- ✏️ EDITABLE: Card 6 — Icon, Title, Description, Tag -->
+      <div class="feature-card">
+        <span class="feature-icon">💤</span>
+        <h3>Sleep Optimization</h3>
+        <p>
+          Discover how quality sleep is your ultimate performance enhancer —
+          with tips to improve both quantity and quality.
+        </p>
+        <span class="feature-tag">Recovery</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       TIPS / ARTICLE CARDS SECTION
+       ✏️ Edit: Section title, subtitle
+       ✏️ Edit: Each tip card — image URL, category, title,
+                description, date, and read time
+  ============================================= -->
+  <section id="tips">
+    <!-- ✏️ EDITABLE: Section heading -->
+    <h2 class="section-title">Latest Fitness Tips</h2>
+    <p class="section-subtitle">Expert advice to supercharge your daily routine</p>
+
+    <div class="tips-grid">
+
+      <!-- ✏️ EDITABLE: Tip Card 1 -->
+      <div class="tip-card">
+        <div class="tip-card-img">
+          <!-- ✏️ EDITABLE: Change image src to your photo URL or local file -->
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600" alt="Morning Workout" />
+          <!-- ✏️ EDITABLE: Change category badge -->
+          <span class="tip-category">Workout</span>
+        </div>
+        <div class="tip-card-body">
+          <!-- ✏️ EDITABLE: Card title -->
+          <h3>Why Morning Workouts Boost Your Entire Day</h3>
+          <!-- ✏️ EDITABLE: Card description -->
+          <p>Starting your day with movement improves focus, energy levels, and mood throughout the day.</p>
+          <div class="tip-meta">
+            <!-- ✏️ EDITABLE: Date and read time -->
+            <span>📅 June 2025</span>
+            <span>⏱ 5 min read</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✏️ EDITABLE: Tip Card 2 -->
+      <div class="tip-card">
+        <div class="tip-card-img">
+          <!-- ✏️ EDITABLE: Change image src -->
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600" alt="Healthy Meal" />
+          <!-- ✏️ EDITABLE: Category -->
+          <span class="tip-category">Nutrition</span>
+        </div>
+        <div class="tip-card-body">
+          <!-- ✏️ EDITABLE: Title and description -->
+          <h3>Top 10 High-Protein Foods for Muscle Recovery</h3>
+          <p>Discover the best natural protein sources that help repair and grow muscle tissue faster.</p>
+          <div class="tip-meta">
+            <span>📅 June 2025</span>
+            <span>⏱ 7 min read</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✏️ EDITABLE: Tip Card 3 -->
+      <div class="tip-card">
+        <div class="tip-card-img">
+          <!-- ✏️ EDITABLE: Change image src -->
+          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600" alt="Meditation" />
+          <!-- ✏️ EDITABLE: Category -->
+          <span class="tip-category">Mindfulness</span>
+        </div>
+        <div class="tip-card-body">
+          <!-- ✏️ EDITABLE: Title and description -->
+          <h3>5-Minute Breathing Techniques to Reduce Stress</h3>
+          <p>Simple breathwork exercises that lower cortisol, improve mental clarity, and enhance performance.</p>
+          <div class="tip-meta">
+            <span>📅 May 2025</span>
+            <span>⏱ 4 min read</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       CTA BANNER
+       ✏️ Edit: Background image in CSS (#cta-banner)
+       ✏️ Edit: Headline, description, button text/link
+  ============================================= -->
+  <section id="cta-banner">
+    <div class="cta-content">
+      <!-- ✏️ EDITABLE: Banner headline -->
+      <h2>Ready to Start Your Fitness Journey?</h2>
+      <!-- ✏️ EDITABLE: Banner description -->
+      <p>
+        Join thousands of people who have already transformed their lives.
+        Get your free personalized workout plan today and take the first step.
+      </p>
+      <!-- ✏️ EDITABLE: Banner button text and link -->
+      <a href="#newsletter" class="btn btn-primary">Get My Free Plan</a>
+    </div>
+  </section>
+
+  <!-- =============================================
+       TESTIMONIALS SECTION
+       ✏️ Edit: Section title, subtitle
+       ✏️ Edit: Each testimonial — quote, avatar image,
+                author name, role, and star rating
+  ============================================= -->
+  <section id="testimonials">
+    <!-- ✏️ EDITABLE: Section heading -->
+    <h2 class="section-title">Success Stories</h2>
+    <p class="section-subtitle">Real results from real people in our community</p>
+
+    <div class="testimonials-grid">
+
+      <!-- ✏️ EDITABLE: Testimonial 1 -->
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <!-- ✏️ EDITABLE: Testimonial quote -->
+        <p>"I lost 12 kg in 3 months just by following the nutrition and workout tips here. Life-changing content!"</p>
+        <div class="testimonial-author">
+          <!-- ✏️ EDITABLE: Avatar image URL -->
+          <img src="https://i.pravatar.cc/100?img=47" alt="Sarah M." />
+          <div class="author-info">
+            <!-- ✏️ EDITABLE: Author name and role -->
+            <h4>Sarah M.</h4>
+            <span>Fitness Enthusiast</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✏️ EDITABLE: Testimonial 2 -->
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <!-- ✏️ EDITABLE: Testimonial quote -->
+        <p>"The sleep and recovery insights completely changed how I train. I feel stronger and more energized than ever."</p>
+        <div class="testimonial-author">
+          <!-- ✏️ EDITABLE: Avatar image URL -->
+          <img src="https://i.pravatar.cc/100?img=12" alt="James K." />
+          <div class="author-info">
+            <!-- ✏️ EDITABLE: Author name and role -->
+            <h4>James K.</h4>
+            <span>Marathon Runner</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✏️ EDITABLE: Testimonial 3 -->
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <!-- ✏️ EDITABLE: Testimonial quote -->
+        <p>"Best health content I've come across. Simple, clear, and actually works. I recommend it to everyone!"</p>
+        <div class="testimonial-author">
+          <!-- ✏️ EDITABLE: Avatar image URL -->
+          <img src="https://i.pravatar.cc/100?img=32" alt="Linda T." />
+          <div class="author-info">
+            <!-- ✏️ EDITABLE: Author name and role -->
+            <h4>Linda T.</h4>
+            <span>Yoga Instructor</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       NEWSLETTER SECTION
+       ✏️ Edit: Headline, description, button text
+       ✏️ Edit: Connect form action to your Notify endpoint
+  ============================================= -->
+  <section id="newsletter">
+    <!-- ✏️ EDITABLE: Newsletter headline -->
+    <h2>Stay Fit. Stay Informed. 💬</h2>
+    <!-- ✏️ EDITABLE: Newsletter description -->
+    <p>Get weekly health tips, workout plans, and motivation delivered straight to your inbox.</p>
+
+    <!-- ✏️ EDITABLE: Update action="" with your Notify form endpoint URL -->
+    <form class="newsletter-form" action="#" method="POST">
+      <input type="email" name="email" placeholder="Enter your email address" required />
+      <!-- ✏️ EDITABLE: Button label -->
+      <button type="submit" class="btn btn-primary">Subscribe Free</button>
+    </form>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+       ✏️ Edit: Footer copyright text and brand name
+  ============================================= -->
+  <footer>
+    <!-- ✏️ EDITABLE: Footer content -->
+    <p>© 2025 <span>FitInsight</span>. All rights reserved. | Built with ❤️ for a healthier world.</p>
+  </footer>
+
+</body>
+</html>
